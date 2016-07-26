@@ -21,6 +21,9 @@
 		"samsonos/cms_app_field":"*",
         "samsonos/php_treeview":"*"
     },
+    "replace":{
+        "samsonos/cms_app_navigation":"*"
+    },
     "require-dev": {
         "phpunit/phpunit": "4.2.*"
     }
