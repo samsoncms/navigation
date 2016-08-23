@@ -1,5 +1,5 @@
 {
-    "name":"samsoncms/navigation",
+    "name":"samsonos/cms_app_navigation",
     "description": "SamsonCMS navigation application",
     "keywords": [ "samsoncms", "navigation"],
     "authors":[
