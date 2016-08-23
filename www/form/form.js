@@ -126,6 +126,11 @@ function CMSNavigationFormInit(tree) {
                 CMSNavigationFormInit(parent);
                 AppNavigationInitSubMenu();
                 tb.close();
+            }, function(form){
+                console.log(s('#Name', form));
+                if(s('#Name', form).val() === '') {
+                    return false;
+                }
             });
             s(".cancel-button").click(function() {
                 tb.close();
@@ -244,6 +249,14 @@ function AppNavigationInitSubMenu() {
                 CMSNavigationFormInit(s(".tree-container"));
                 tb.close();
             }, function(form) {
+                var nameInput = s('#Name', form);
+                if(nameInput.val() === '') {
+                    var errorElement = document.createElement('div');
+                    errorElement.innerHTML = 'Field name can not be empty';
+                    errorElement.style.color = 'red';
+                    nameInput.parent().prepend(errorElement);
+                    return false;
+                }
                 s('input[type="submit"]', form).a('disabled', 'disabled');
                 return true;
             });
