@@ -178,23 +178,24 @@ class StructureApplication extends \samsoncms\Application
      */
     public function __async_save($navID = 0, $parentId = 0)
     {
-
-        /** @var \samson\cms\web\navigation\CMSNav $data */
-        $data = null;
-
-        if (dbQuery('\samson\cms\web\navigation\CMSNav')->StructureID($navID)->first($data)) {
-            // Update structure data
-            $data->update();
+        if (empty($_POST['Name'])) {
+            return ['status' => false, 'error' => 'Navigation name cannot be empty'];
         } else {
-            // Create new structure
-            $nav = new \samson\cms\web\navigation\CMSNav(false);
-            $nav->Created = date('Y-m-d H:m:s');
+            /** @var \samson\cms\web\navigation\CMSNav $data */
+            $data = null;
+            if (dbQuery(CMSNav::class)->StructureID($navID)->first($data)) {
+                // Update structure data
+                $data->update();
+            } else {
+                // Create new structure
+                $nav = new \samson\cms\web\navigation\CMSNav(false);
+                $nav->Created = date('Y-m-d H:m:s');
+                $nav->fillFields();
+            }
 
-            $nav->fillFields();
+            // return Ajax response
+            return $this->__async_tree($parentId);
         }
-
-        // return Ajax response
-        return $this->__async_tree($parentId);
     }
 
     /**
