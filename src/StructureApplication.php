@@ -27,7 +27,7 @@ class StructureApplication extends \samsoncms\Application
     public function main()
     {
         // Get new 5 structures
-        $query = dbQuery('samson\cms\CMSNav')
+        $query = dbQuery('samsoncms\api\Navigation')
                 ->join('user')
                 ->Active(1)
                 ->order_by('Created', 'DESC')
@@ -117,7 +117,7 @@ class StructureApplication extends \samsoncms\Application
         $data = null;
 
         if (dbQuery('\samson\cms\web\navigation\CMSNav')->StructureID($navID)->first($data)) {
-            if (dbQuery('\samson\cms\CMSMaterial')->id($data->MaterialID)->first($mat)) {
+            if (dbQuery('\samsoncms\api\Material')->id($data->MaterialID)->first($mat)) {
                 m()->cmsmaterial($mat);
             }
             $parent_id = $parentID;

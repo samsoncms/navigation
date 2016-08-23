@@ -7,17 +7,21 @@
  */
 namespace samson\cms\web\navigation;
 
-
 use samson\activerecord\dbRelation;
+use samson\activerecord\structure;
+use samson\activerecord\structure_relation;
+use samson\cms\web\field\CMSField;
+use samsoncms\api\Field;
+use samsoncms\api\NavigationField;
 
-class CMSNav extends \samson\cms\CMSNav
+class CMSNav extends \samsoncms\api\Navigation
 {
     public $currentNavID = 0;
 
     /**
      * Help method for sorting structures
-     * @param $str1 \samson\cms\CMSNav
-     * @param $str2 \samson\cms\CMSNav
+     * @param $str1 \samsoncms\api\Navigation
+     * @param $str2 \samsoncms\api\Navigation
      *
      * @return bool
      */
@@ -60,8 +64,8 @@ class CMSNav extends \samson\cms\CMSNav
     public function getFieldList()
     {
         // Get additional fields of current structure
-        $fields = dbQuery('\samson\cms\web\field\CMSField')
-            ->join('\samson\cms\CMSNavField')
+        $fields = dbQuery(CMSField::class)
+            ->join(NavigationField::class)
             ->cond('StructureID', $this->id)
             ->exec();
 
@@ -144,7 +148,7 @@ class CMSNav extends \samson\cms\CMSNav
         $relations = null;
 
         // If CMSNav has old relations then delete it
-        if (dbQuery('\samson\activerecord\structure_relation')->child_id($this->id)->exec($relations)) {
+        if (dbQuery(structure_relation::class)->child_id($this->id)->exec($relations)) {
             /** @var \samson\activerecord\structure_relation $relation */
             foreach ($relations as $relation) {
                 $relation->delete();
@@ -312,7 +316,7 @@ class CMSNav extends \samson\cms\CMSNav
         /** @var CMSNav $seoNav */
         $seoNav = null;
 
-        if (dbQuery('structure')->cond('Url', '__seo')->first($seoNav)) {
+        if (dbQuery(structure::class)->cond('Url', '__seo')->first($seoNav)) {
             $strmat = new \samson\activerecord\structurematerial(false);
             $strmat->MaterialID = $material->id;
             $strmat->StructureID = $seoNav->id;
