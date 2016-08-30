@@ -1,5 +1,5 @@
 <?php
-namespace samson\cms\web\navigation;
+namespace samson\cms\web\navigation\i18n;
 
 use samsonphp\i18n\IDictionary;
 

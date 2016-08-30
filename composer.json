@@ -11,9 +11,9 @@
     "license":"Open Software License (OSL) v 3.0",
     "homepage":"http://samsonphp.com/",
     "autoload" : {
-        "classmap": ["src/"],
-        "psr-0": {
-            "samson\\cms\\web\\navigation": "src/"
+        "psr-4": {
+            "samson\\cms\\web\\navigation\\": "src/",
+            "samson\\cms\\web\\navigation\\i18n\\": "i18n/"
         }
     },
     "require":{
